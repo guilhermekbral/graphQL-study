@@ -1,0 +1,30 @@
+.container-fluid
+  .row.col-12
+    .title
+      %h1= organization.name
+
+  - if pipe.present?
+    .row
+      .col-12
+        %h2= pipe.name
+    .row.col-7
+      %table.table.table-bordered.table-striped
+        %thead.thead-light
+          %tr
+            %th= Card.human_attribute_name :title
+            %th= Card.human_attribute_name :due_date
+            %th= Card.human_attribute_name :phase
+            %th= Card.human_attribute_name :due_date
+            %th= "What's the bug?"
+
+        %tbody.table-light
+          - pipe.cards.each do |card|
+            %tr
+              %td= card.title
+              %td= I18n.l(card.created_at, format: :long)
+              %td= card.phase.name
+              %td= card.due_date
+              %td= card.title
+  - else
+    .row.piped.col-12
+      %h3= 'No pipe data available. Please use \'fetch new data\' button to update the organization and pipes information'
